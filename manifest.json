@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "calendar",
+  "description": "time view",
+  "version": "1.0",
+  "action": {
+    "default_popup": "./dist/index.html",
+    "default_icon": "icon.png"
+  }
+}
