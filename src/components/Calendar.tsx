@@ -8,7 +8,7 @@ export default function Calendar() {
   const onSelect = store((s) => s.onSelect);
   const onChangeMonth = store((s) => s.onChangeMonth);
   return (
-    <div className="p-[72px] h-full w-full text-[#fff] select-none">
+    <div className="p-[72px] h-full w-full dark:text-[#fff] text-[#333] select-none">
       <div className="flex justify-between h-[29px] mb-[56px]">
         <div className="select-text">{showDate.format('YYYY年MM月')}</div>
         <div className="flex gap-[10px]">
@@ -54,7 +54,7 @@ export default function Calendar() {
           {dateList.map((item) => (
             <div
               key={item}
-              className="w-[30px] flex items-center justify-center"
+              className="w-[30px] flex items-center justify-center text-[#333333] dark:text-[#fff]"
             >
               {item}
             </div>
@@ -70,7 +70,7 @@ export default function Calendar() {
                       key={it.date}
                       className="w-[30px] text-[#2A2A2A] flex items-center justify-center relative"
                     >
-                      <div className="w-[56px] h-[56px] bg-[#589C5F] absolute rounded-[50%] flex items-center justify-center text-[#fff]">
+                      <div className="w-[56px] h-[56px] bg-[#FB3F4A] dark:bg-[#589C5F] absolute rounded-[50%] flex items-center justify-center text-[#fff]">
                         {it.date}
                       </div>
                     </div>
@@ -80,7 +80,7 @@ export default function Calendar() {
                   return (
                     <div
                       key={it.date}
-                      className="w-[30px] text-[#2A2A2A] flex items-center justify-center cursor-pointer"
+                      className="w-[30px] text-[#e9e5e5] dark:text-[#2A2A2A] flex items-center justify-center cursor-pointer"
                     >
                       {it.date}
                     </div>
@@ -89,7 +89,7 @@ export default function Calendar() {
                 return (
                   <div
                     key={it.date}
-                    className="w-[30px] text-[#CCCCCC] flex items-center justify-center cursor-pointer"
+                    className="w-[30px] text-[#666666] dark:text-[#CCCCCC] flex items-center justify-center cursor-pointer"
                     onClick={() => {
                       onSelect(`${it.year}-${it.month}-${it.date}`);
                     }}
