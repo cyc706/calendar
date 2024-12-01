@@ -1,31 +1,50 @@
 import { create } from 'zustand';
 import dayjs from 'dayjs';
+import type { Dayjs } from 'dayjs';
 
 interface DateItem {
   display: string;
   year: number;
   month: number;
   date: number;
-  //是否选中
-  // select: boolean;
+  value: number;
   // 是否当前月份日期
   active: boolean;
 }
 
 interface Calendar {
-  select: number;
+  showDate: Dayjs;
+  selectDate: Dayjs;
+  onSelect: (date: string) => void;
+  onChangeMonth: (index: number) => void;
   list: DateItem[][];
   dateList: string[];
 }
 
+const nowDate = dayjs().startOf('d');
+
 const store = create<Calendar>((set, get) => ({
-  select: dayjs().date(),
-  list: generateData(),
+  showDate: nowDate.startOf('month'),
+  selectDate: nowDate,
+  list: generateData(nowDate),
   dateList: ['日', '一', '二', '三', '四', '五', '六'],
+  onSelect: (date) => {
+    set({
+      selectDate: dayjs(date),
+    });
+  },
+  onChangeMonth: (index) => {
+    const newData = get().showDate.add(index, 'month');
+
+    set({
+      list: generateData(newData),
+      showDate: newData,
+    });
+  }
 }));
 
-function generateData(): DateItem[][] {
-  const cureent = dayjs();
+function generateData(date: Dayjs): DateItem[][] {
+  const cureent = date;
   const startOfDate = cureent.startOf('month');
   const endDate = cureent.endOf('month');
 
@@ -42,8 +61,9 @@ function generateData(): DateItem[][] {
       lineList.push({
         display: date.format('YYYY-MM-DD'),
         year: date.year(),
-        month: date.month(),
+        month: date.month() + 1,
         date: date.date(),
+        value: date.valueOf(),
         // 是否选中
         // select: date.date() === cureent.date(),
         // 是否当前月份日期
@@ -52,7 +72,6 @@ function generateData(): DateItem[][] {
     }
     dataList.push(lineList);
   }
-
   return dataList;
 }
 
